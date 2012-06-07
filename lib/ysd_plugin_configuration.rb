@@ -1,0 +1,3 @@
+require 'ysd_plugin_configuration_middleware'
+require 'ysd_plugin_configuration_extension'
+require 'ysd_plugin_configuration_init'
