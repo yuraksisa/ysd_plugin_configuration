@@ -10,6 +10,7 @@ Plugins::SinatraAppPlugin.register :configuration do
    version=     '0.1'
    sinatra_extension Sinatra::Configuration
    sinatra_extension Sinatra::YSD::VariableManagement
+   sinatra_extension Sinatra::YSD::VariableManagementRESTApi
    hooker            Huasi::ConfigurationExtension
   
 end
