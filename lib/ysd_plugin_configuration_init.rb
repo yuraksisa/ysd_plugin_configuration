@@ -8,7 +8,7 @@ Plugins::SinatraAppPlugin.register :configuration do
    author=      'yurak sisa'
    description= 'Integrate the configuration'
    version=     '0.1'
-   sinatra_extension Sinatra::Configuration
+   sinatra_extension Sinatra::YSD::Configuration
    sinatra_extension Sinatra::YSD::VariableManagement
    sinatra_extension Sinatra::YSD::VariableManagementRESTApi
    hooker            Huasi::ConfigurationExtension

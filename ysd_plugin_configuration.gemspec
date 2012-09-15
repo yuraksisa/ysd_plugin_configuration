@@ -8,8 +8,11 @@ Gem::Specification.new do |s|
   s.description = "Configuration integration"
   s.summary = "Configuration integration"
   
-  s.add_runtime_dependency "ysd_core_plugins"
-  s.add_runtime_dependency "ysd_md_configuration"
-  s.add_runtime_dependency "ysd_mw_configuration"
+  s.add_runtime_dependency "json"  
+  
+  s.add_runtime_dependency "ysd_plugin_site"              # Page serving
+  s.add_runtime_dependency "ysd_plugin_entitymanagement"  # Framework  
+  s.add_runtime_dependency "ysd_md_configuration"         # Model
+  s.add_runtime_dependency "ysd_core_plugins"             # Plugin system
   
 end
