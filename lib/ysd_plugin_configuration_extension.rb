@@ -6,6 +6,19 @@ require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
 module Huasi
 
   class ConfigurationExtension < Plugins::ViewListener
+ 
+    # ========= Installation =================
+
+    # 
+    # Install the plugin
+    #
+    def install(context={})
+
+       SystemConfiguration::Variable.first_or_create({:name => 'configuration.variables_page_size'}, 
+                                                     {:value => '20', :description => 'configuration page size', :module => :configuration}) 
+
+    
+    end 
                 
     # ========= Menu =====================
     

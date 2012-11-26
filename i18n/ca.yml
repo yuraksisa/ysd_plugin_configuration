@@ -1,3 +1,15 @@
+variable_management:
+  title: Configuració
+  description: <p>Pot conèixer i personalitzar la configuració del mòduls instalats.</p>
+  table:
+    name: Nom
+    value: Valor
+  form:
+    name_title: Nom
+    name_required: El nom és obligatori.
+    value_title: Valor
+    description_title: Descripció
+    module_title: Mòdul 
 configuration_admin_menu:
   configuration_menu: Configuració
   variable_management: Variables

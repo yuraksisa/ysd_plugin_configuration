@@ -1,3 +1,15 @@
+variable_management:
+  title: Settings
+  description: <p>Configuration variables allows you to know and change the configuration of the installed modules.</p>
+  table:
+    name: Name
+    value: Value
+  form:
+    name_title: Name
+    name_require: Name is required.
+    value_title: Value
+    description_title: Description
+    module_title: Module
 configuration_admin_menu:
   configuration_menu: Configuration
   variable_management: Settings

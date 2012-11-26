@@ -1,3 +1,15 @@
+variable_management:
+  title: Configuración
+  description: <p>Puede conocer y personalizar la configuración de los diferentes módulos instalados.</p>
+  table:
+    name: Nombre
+    value: Valor
+  form:
+    name_title: Nombre
+    name_required: El nombre es obligatorio.
+    value_title: Valor
+    description_title: Descripción
+    module_title: Módulo  
 configuration_admin_menu:
   configuration_menu: Configuración
   variable_management: Variables

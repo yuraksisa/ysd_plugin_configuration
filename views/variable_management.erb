@@ -3,7 +3,7 @@
 <!-- Renders the element description -->
 <script type="text/tmpl" id="elements_description">
 
-    <p>Puede conocer y personalizar la configuración de los diferentes módulos instalados. Entre otros aspectos, podrá establecer los tamaños de las imágenes, las cuentas para realizar sincronización de contenidos con otros sistemas.</p>
+    <%= t.variable_management.description %>
 
 </script>
 
@@ -13,10 +13,8 @@
   <table id="elements_table" class="table">
      <thead class="table-header">
        <tr>
-         <th class="table-header-title" scope="col" style="width:20%">Name</th>
-         <th class="table-header-title" scope="col" style="width:30%">Value</th>
-         <th class="table-header-title" scope="col" style="width:30%">Description</th>         
-         <th class="table-header-title" scope="col" style="width:20%">Module</th>
+         <th class="table-header-title" scope="col" style="width:50%"><%= t.variable_management.table.name %></th>
+         <th class="table-header-title" scope="col" style="width:50%"><%= t.variable_management.table.value %></th>
        </tr>
      </thead>
      <tbody id="elements_tbody" class="table-tbody">             
@@ -32,8 +30,6 @@
     <tr class="table-row element-navigation-detail" rel="<%%= index %>" id="element_row_<%%=index%>">
       <td class="table-cell"><%%= entity.name %></td>
       <td class="table-cell"><%%= entity.value %></td>
-      <td class="table-cell"><%%= entity.description %></td>      
-      <td class="table-cell"><%%= entity.module %></td>
     </tr>
 
 </script>
@@ -43,10 +39,10 @@
 <script type="text/tmpl" id="element_template">
 
      <div class="element_template" style="overflow:hidden">
-       <div class="entity-field"><div class="entity-fieldlabel">Name</div> <div class="entity-fieldvalue"><span class="entity-id"><%%= entity.name %></span></div> </div>
-       <div class="entity-field"><div class="entity-fieldlabel">Value</div> <div class="entity-fieldvalue"><%%= entity.value %></div> </div>
-       <div class="entity-field"><div class="entity-fieldlabel">Description</div> <div class="entity-fieldvalue"><%%= entity.description %></div></div>
-       <div class="entity-field"><div class="entity-fieldlabel">Module</div> <div class="entity-fieldvalue"><%%= entity.module %></div> </div>              
+       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.name_title %></div> <div class="entity-fieldvalue"><span class="entity-id"><%%= entity.name %></span></div> </div>
+       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.value_title %></div> <div class="entity-fieldvalue"><%%= entity.value %></div> </div>
+       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.description_title %></div> <div class="entity-fieldvalue"><%%= entity.description %></div></div>
+       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.module_title %></div> <div class="entity-fieldvalue"><%%= entity.module %></div> </div>              
      </div>
 
 </script>
@@ -55,10 +51,10 @@
 
 <script type="text/tmpl" id="element_template_form">
               
-     <form name="element">
+     <form name="element" id="variable_management_form">
         
         <div class="top-navigation-bar navigation-bar">
-             <h2 class="form-title">Configuración</h2>
+             <h2 class="form-title"><%=t.variable_management.title%></h2>
              <div class="navigation-bar-nav-buttons">
              </div>
         </div>        
@@ -66,24 +62,24 @@
         <div class="form-fields">
         
           <div class="formrow">
-            <label for="name" class="fieldtitle">Name <span class="mandatoryfield">*</span></label>
+            <label for="name" class="fieldtitle"><%= t.variable_management.form.name_title %> <span class="mandatoryfield">*</span></label>
             <input type="text" maxlength="128" id="name" name="name" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.name %>" <%% } %> />
           </div>
 
           <div class="formrow">
-            <label for="value" class="fieldtitle">Value</label>
-            <textarea name="value" id="value" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.value%><%% } %></textarea>
+            <label for="value" class="fieldtitle"><%= t.variable_management.form.value_title %></label>
+            <textarea name="value" id="value" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.value%><%%}%></textarea>
           </div>
           <p style="text-align:right"> <span id="value_length"></span> <%= t.available_chars %> </p>
          
           <div class="formrow">
-            <label for="description" class="fieldtitle">Description</label>
-            <textarea name="description" id="description" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.description%><%% } %></textarea>
+            <label for="description" class="fieldtitle"><%= t.variable_management.form.description_title %></label>
+            <textarea name="description" id="description" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.description%><%%}%></textarea>
           </div>
           <p style="text-align:right"> <span id="description_length"></span> <%= t.available_chars %> </p>
                 
           <div class="formrow">
-            <label for="module" class="fieldtitle">Module</label>
+            <label for="module" class="fieldtitle"><%= t.variable_management.form.module_title %></label>
             <input type="text" maxlength="64" id="module" name="module" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.module %>" <%% } %> />
           </div>
 
@@ -91,12 +87,12 @@
         
         <div class="bottom-navigation-bar navigation-bar">
              <div class="navigation-bar-nav-buttons">
-                <input type="button" class="cancel-entity-button action-button entity-management-button" value="Cancel"/>
+                <input type="button" class="cancel-entity-button action-button entity-management-button" value="<%=t.entitymanagement.cancel%>"/>
                 <%% if (entity) { %>
-                  <input type="submit" class="update-entity-button action-button entity-management-button" value="Update"/>
+                  <input type="submit" class="update-entity-button action-button entity-management-button" value="<%=t.entitymanagement.update%>"/>
                 <%% } 
                    else { %>
-                  <input type="submit" class="create-entity-button action-button entity-management-button" value="Create"/>
+                  <input type="submit" class="create-entity-button action-button entity-management-button" value="<%=t.entitymanagement.create%>"/>
                 <%% } %>
              </div>
         </div>
@@ -108,6 +104,9 @@
 
 
 <script type="text/javascript">
+ 
+ require(['jquery', 'YSDEntityManagement', 'YSDForms', 'jquery.validate'], function($, EntityManagement, YSDForms) {
+
  
   function VariableHook() {
  	   
@@ -126,21 +125,59 @@
   	  this.configForm(null);
     }
     
+    this.onRender = function(entity) {
+      $('.navigation-bar-search').hide();
+    }
+    
+    this.onRenderEntities = function(entities) {
+      $('.search-entity-button').hide();	
+      $('.navigation-bar-search').show();	
+    }
+    
     this.configForm = function(entity) {
              
          // Limit the text area length
-         YsdForms.limit_text_area_content_size(document.getElementById('description'), 256, 
+         YSDForms.limit_text_area_content_size(document.getElementById('description'), 256, 
             function (content_remain) {
               document.getElementById('description_length').innerHTML = '<strong>' + content_remain + '</strong>';
             }
          );    
 
          // Limit the text area length
-         YsdForms.limit_text_area_content_size(document.getElementById('value'), 256, 
+         YSDForms.limit_text_area_content_size(document.getElementById('value'), 256, 
             function (content_remain) {
               document.getElementById('value_length').innerHTML = '<strong>' + content_remain + '</strong>';
             }
          ); 
+         
+         this.configValidation();
+    	
+    }
+    
+    this.configValidation = function() {
+           	 
+       	 $('#variable_management_form').validate({
+       	  	
+            submitHandler: function(form) 
+            {
+               return false;
+            },
+                 	        	   
+       	    rules : { // rules
+       	       'name': {
+       	         required: true	
+       	       }
+       	    },
+       	    
+       	    messages : { // messages
+       	       'name': {
+       	       	 required : '<%=t.variable_management.form.name_required%>'
+       	       }
+       	    }
+       	    
+       	  }
+       	 );
+    	
     	
     }
   	
@@ -157,7 +194,8 @@
   var variableHook = new VariableHook();
   var variablesManager = new EntityManagement(urls, 'configuration variable', 12, variableHook);
  
-  $('.entity-title').html('Configuración');
-  
+  $('.entity-title').html('<%= t.variable_management.title%>');
+ 
+ });
   
 </script>

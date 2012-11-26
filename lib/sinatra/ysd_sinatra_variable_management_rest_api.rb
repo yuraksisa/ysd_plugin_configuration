@@ -22,11 +22,35 @@ module Sinatra
         #
         ["/variables","/variables/page/:page"].each do |path|
           app.post path do
+            
+            query_options = {}
+            conditions = {}
+            
+            # Search information (from body)
+            if request.media_type == "application/x-www-form-urlencoded" # Just the text
+              request.body.rewind
+              search_text=request.body.read
+              conditions = {:name.like => "%#{search_text}%"}
+              query_options.store(:conditions, conditions)
+            end
           
-            data=SystemConfiguration::Variable.all
+            # Paging information (from Url) 
+            page_size = SystemConfiguration::Variable.get_value('configuration.variables_page_size', 20).to_i
+            
+            page = params[:page].to_i || 1
+            limit = page_size
+            offset = (page-1) * page_size        
+            
+            query_options.store(:limit, limit)
+            query_options.store(:offset, offset)
+            
+            puts "query options : #{query_options.inspect}"
+            
+            # Do the search
+            data=SystemConfiguration::Variable.all(query_options)
             
             begin # Count does not work for all adapters
-              total=SystemConfiguration::Variable.count
+              total=SystemConfiguration::Variable.count(conditions)
             rescue
               total=SystemConfiguration::Variable.all.length
             end

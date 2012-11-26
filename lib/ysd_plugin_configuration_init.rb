@@ -1,5 +1,4 @@
 require 'ysd-plugins' unless defined?Plugins::Plugin
-require 'ysd_plugin_configuration_middleware'
 require 'ysd_plugin_configuration_extension'
 
 Plugins::SinatraAppPlugin.register :configuration do
