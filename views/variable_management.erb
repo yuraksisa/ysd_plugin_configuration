@@ -1,6 +1,11 @@
 <%= include('entity-management') %>
 
 <!-- Renders the element description -->
+
+<script type="text/tmpl" id="elements_title">
+  <h2 class="entity-title"><%=t.variable_management.title%></h2>
+</script>
+
 <script type="text/tmpl" id="elements_description">
 
     <%= t.variable_management.description %>
@@ -53,12 +58,6 @@
               
      <form name="element" id="variable_management_form">
         
-        <div class="top-navigation-bar navigation-bar">
-             <h2 class="form-title"><%=t.variable_management.title%></h2>
-             <div class="navigation-bar-nav-buttons">
-             </div>
-        </div>        
-
         <div class="form-fields">
         
           <div class="formrow">
