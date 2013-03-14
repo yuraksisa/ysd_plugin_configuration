@@ -3,87 +3,65 @@
 <!-- Renders the element description -->
 
 <script type="text/tmpl" id="elements_title">
-  <h2 class="entity-title"><%=t.variable_management.title%></h2>
+  <h2 class="entity-title"><%=t.secure_variable_management.title%></h2>
 </script>
 
 <script type="text/tmpl" id="elements_description">
-
-    <%= t.variable_management.description %>
-
+  <%= t.secure_variable_management.description %>
 </script>
 
 <!-- Renders the elements container -->
 <script type="text/tmpl" id="elements_container_template">
-
   <table id="elements_table" class="table">
      <thead class="table-header">
        <tr>
-         <th class="table-header-title" scope="col" style="width:50%"><%= t.variable_management.table.name %></th>
-         <th class="table-header-title" scope="col" style="width:50%"><%= t.variable_management.table.value %></th>
+         <th class="table-header-title" scope="col" style="width:50%"><%= t.secure_variable_management.table.name %></th>
+         <th class="table-header-title" scope="col" style="width:50%"><%= t.secure_variable_management.table.value %></th>
        </tr>
      </thead>
      <tbody id="elements_tbody" class="table-tbody">             
      </tbody>
   </table>
-
 </script>
 
 <!-- Renders one element in the elements list view -->
         
 <script type="text/tmpl" id="elements_list_template">
-
     <tr class="table-row element-navigation-detail" rel="<%%= index %>" id="element_row_<%%=index%>">
       <td class="table-cell"><%%= entity.name %></td>
       <td class="table-cell"><%%= entity.value %></td>
     </tr>
-
 </script>
 
 <!-- Renders one element in the element view (full detailed) -->
 
 <script type="text/tmpl" id="element_template">
-
-     <div class="element_template" style="overflow:hidden">
-       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.name_title %></div> <div class="entity-fieldvalue"><span class="entity-id"><%%= entity.name %></span></div> </div>
-       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.value_title %></div> <div class="entity-fieldvalue"><%%= entity.value %></div> </div>
-       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.description_title %></div> <div class="entity-fieldvalue"><%%= entity.description %></div></div>
-       <div class="entity-field"><div class="entity-fieldlabel"><%= t.variable_management.form.module_title %></div> <div class="entity-fieldvalue"><%%= entity.module %></div> </div>              
-     </div>
-
 </script>
 
 <!-- Renders the form to edit an element -->
 
 <script type="text/tmpl" id="element_template_form">
-              
      <form name="element" id="variable_management_form">
-        
         <div class="form-fields">
-        
           <div class="formrow">
-            <label for="name" class="fieldtitle"><%= t.variable_management.form.name_title %> <span class="mandatoryfield">*</span></label>
+            <label for="name" class="fieldtitle"><%= t.secure_variable_management.form.name_title %> <span class="mandatoryfield">*</span></label>
             <input type="text" maxlength="128" id="name" name="name" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.name %>" <%% } %> />
           </div>
-
           <div class="formrow">
-            <label for="value" class="fieldtitle"><%= t.variable_management.form.value_title %></label>
+            <label for="value" class="fieldtitle"><%= t.secure_variable_management.form.value_title %></label>
             <textarea name="value" id="value" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.value%><%%}%></textarea>
           </div>
           <p style="text-align:right"> <span id="value_length"></span> <%= t.available_chars %> </p>
-         
           <div class="formrow">
-            <label for="description" class="fieldtitle"><%= t.variable_management.form.description_title %></label>
+            <label for="description" class="fieldtitle"><%= t.secure_variable_management.form.description_title %></label>
             <textarea name="description" id="description" class="fieldcontrol" rows="5"><%% if (entity) { %><%%=entity.description%><%%}%></textarea>
           </div>
           <p style="text-align:right"> <span id="description_length"></span> <%= t.available_chars %> </p>
-                
           <div class="formrow">
-            <label for="module" class="fieldtitle"><%= t.variable_management.form.module_title %></label>
+            <label for="module" class="fieldtitle"><%= t.secure_variable_management.form.module_title %></label>
             <input type="text" maxlength="64" id="module" name="module" class="fieldcontrol" <%% if (entity) { %> value="<%%= entity.module %>" <%% } %> />
           </div>
-
         </div>
-        
         <div class="bottom-navigation-bar navigation-bar">
              <div class="navigation-bar-crud-buttons">
                 <input type="button" class="cancel-entity-button action-button entity-management-button" value="<%=t.entitymanagement.cancel%>"/>
@@ -95,10 +73,7 @@
                 <%% } %>
              </div>
         </div>
-     
      </form>
-     
-
 </script>
 
 
@@ -135,14 +110,14 @@
     
     this.configForm = function(entity) {
              
-         // Limit the text area length
+         // Limit the description length
          YSDForms.limit_text_area_content_size(document.getElementById('description'), 256, 
             function (content_remain) {
               document.getElementById('description_length').innerHTML = '<strong>' + content_remain + '</strong>';
             }
          );    
 
-         // Limit the text area length
+         // Limit the value length
          YSDForms.limit_text_area_content_size(document.getElementById('value'), 256, 
             function (content_remain) {
               document.getElementById('value_length').innerHTML = '<strong>' + content_remain + '</strong>';
@@ -183,15 +158,15 @@
   };
   
   var urls = { 
-  	           query_url  : '/variables',
-    	       create_url : '/variable',
-  	           update_url : '/variable',
-  	           delete_url : '/variable',
-  	           get_url    : '/variable'
+  	           query_url  : '/svariables',
+    	         create_url : '/svariable',
+  	           update_url : '/svariable',
+  	           delete_url : '/svariable',
+  	           get_url    : '/svariable'
   	         };
   
   var variableHook = new VariableHook();
-  var variablesManager = new EntityManagement(urls, 'configuration variable', <%= variable_page_size %>, variableHook);
+  var variablesManager = new EntityManagement(urls, 'configuration variable', <%=secure_variable_page_size%>, variableHook);
  
  });
   

@@ -1,4 +1,4 @@
-require 'ysd_md_integration'
+require 'ysd_md_configuration'
 require 'uri'
 module Sinatra
   module YSD
@@ -66,54 +66,48 @@ module Sinatra
         # Create a new variable
         #
         app.post "/variable" do
-        
-          puts "Creating variable"
-          
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
           
-          # Creates the new variable
           the_variable = SystemConfiguration::Variable.create(variable_request) 
-          
-          puts "created variable : #{the_variable}"
-          
-          # Return          
+                    
           status 200
           content_type :json
-          the_variable.to_json          
-        
+          the_variable.to_json                  
         end
         
         #
         # Updates a variable
         #
         app.put "/variable" do
-        
-          puts "Updating variable"
-        
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
           
-          # Updates variable         
           the_variable = SystemConfiguration::Variable.get(variable_request['name'])
           the_variable.attributes=(variable_request)
           the_variable.save
-          
-          puts "updated variable : #{the_variable}"
-                   
-          # Return          
+
           status 200
           content_type :json
           the_variable.to_json
-        
-        
         end
         
         #
         # Deletes a variable
         #
         app.delete "/variable" do
-        
+          request.body.rewind
+          variable_request = JSON.parse(URI.unescape(request.body.read))
+
+          if the_variable = SystemConfiguration::Variable.get(variable_request['name'])
+            the_variable.destroy
+            status 200
+            content_type :json
+            body true.to_json
+          else
+            status 404 
+          end
+
         end
       
       end

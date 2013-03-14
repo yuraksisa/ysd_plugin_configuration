@@ -1,4 +1,3 @@
-require 'ysd_md_integration'
 module Sinatra
   module YSD
     module VariableManagement
@@ -9,7 +8,8 @@ module Sinatra
         # Variables management page
         #
         app.get "/variable-management" do
-          load_page 'variable_management'.to_sym
+          load_page :variable_management, 
+            :locals => {:secure_variable_page_size => 20}
         end
               
       end

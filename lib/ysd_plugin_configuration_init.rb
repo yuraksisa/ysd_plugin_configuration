@@ -10,6 +10,8 @@ Plugins::SinatraAppPlugin.register :configuration do
    sinatra_extension Sinatra::YSD::Configuration
    sinatra_extension Sinatra::YSD::VariableManagement
    sinatra_extension Sinatra::YSD::VariableManagementRESTApi
+   sinatra_extension Sinatra::YSD::SecureVariableManagement
+   sinatra_extension Sinatra::YSD::SecureVariableManagementRESTApi   
    hooker            Huasi::ConfigurationExtension
   
 end
