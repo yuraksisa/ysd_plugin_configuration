@@ -21,21 +21,72 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
   end
 
   describe "POST /svariables" do
-
+    
     before :each do
-      SystemConfiguration::SecureVariable.should_receive(:all).and_return(
-      	[SystemConfiguration::SecureVariable.new(secure_variable)])
+      SystemConfiguration::Variable.should_receive(:get_value).
+          with('configuration.secure_variable_page_size').
+          and_return(10) 
     end
 
-    subject do
-      post '/svariables'
-      last_response
+    context "no pagination and no query" do
+
+      before :each do
+        SystemConfiguration::SecureVariable.should_receive(:all).
+          with({:offset => 0, :limit => 10}).
+          and_return([SystemConfiguration::SecureVariable.new(secure_variable)])
+      end
+
+      subject do
+        post '/svariables', {}
+        last_response
+      end
+
+      its(:status) { should == 200 } 
+      its(:header) { should have_key 'Content-Type' }
+      it { subject.header['Content-Type'].should match(/application\/json/) }
+      its(:body) { should == [SystemConfiguration::SecureVariable.new(secure_variable)].to_json }
+    
     end
 
-    its(:status) { should == 200 } 
-    its(:header) { should have_key 'Content-Type' }
-    it { subject.header['Content-Type'].should match(/application\/json/) }
-    its(:body) { should == [SystemConfiguration::SecureVariable.new(secure_variable)].to_json }
+    context "pagination" do
+
+      before :each do
+        SystemConfiguration::SecureVariable.should_receive(:all).
+          with({:offset => 10, :limit => 10}).
+          and_return([SystemConfiguration::SecureVariable.new(secure_variable)])
+      end
+
+      subject do
+        post '/svariables/page/2', {}
+        last_response
+      end
+
+      its(:status) { should == 200 } 
+      its(:header) { should have_key 'Content-Type' }
+      it { subject.header['Content-Type'].should match(/application\/json/) }
+      its(:body) { should == [SystemConfiguration::SecureVariable.new(secure_variable)].to_json }
+
+    end
+
+    context "pagination and query" do
+
+      before :each do
+        SystemConfiguration::SecureVariable.should_receive(:all).
+          with(hash_including(:conditions => {:name.like => "%text%"}, :offset => 10, :limit => 10)).
+          and_return([SystemConfiguration::SecureVariable.new(secure_variable)])
+      end
+
+      subject do 
+        post '/svariables/page/2', {:search => 'text'}
+        last_response
+      end
+      
+      its(:status) {should == 200}
+      its(:header) {should have_key 'Content-Type'}
+      it { subject.header['Content-Type'].should match(/application\/json/) }
+      its(:body) { should == [SystemConfiguration::SecureVariable.new(secure_variable)].to_json }
+
+    end
 
   end
 

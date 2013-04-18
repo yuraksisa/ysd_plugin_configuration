@@ -26,7 +26,6 @@ module Sinatra
             query_options = {}
             conditions = {}
             
-            # Search information (from body)
             if request.media_type == "application/x-www-form-urlencoded" # Just the text
               request.body.rewind
               search_text=request.body.read
@@ -34,7 +33,6 @@ module Sinatra
               query_options.store(:conditions, conditions)
             end
           
-            # Paging information (from Url) 
             page_size = SystemConfiguration::Variable.get_value('configuration.variables_page_size', 20).to_i
             
             page = params[:page].to_i || 1

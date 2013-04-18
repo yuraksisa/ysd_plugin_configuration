@@ -98,14 +98,9 @@
   	  $('#name').focus();
   	  this.configForm(null);
     }
-    
-    this.onRender = function(entity) {
-      $('.navigation-bar-search').hide();
-    }
-    
+        
     this.onRenderEntities = function(entities) {
-      $('.search-entity-button').hide();	
-      $('.navigation-bar-search').show();	
+      $('.elements-search').show();	
     }
     
     this.configForm = function(entity) {
