@@ -161,7 +161,7 @@
   	         };
   
   var variableHook = new VariableHook();
-  var variablesManager = new EntityManagement(urls, 'configuration variable', <%=secure_variable_page_size%>, variableHook);
+  var variablesManager = new EntityManagement(urls, 'configuration variable', <%=secure_variable_page_size%>, variableHook, {prefix: '/admin'});
  
  });
   

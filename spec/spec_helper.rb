@@ -2,9 +2,11 @@ require 'sinatra/base'
 require 'sinatra/r18n'
 require 'data_mapper'
 require 'ysd_plugin_configuration'
+require 'ysd_yito_core'
 
 class TestingSinatraApp < Sinatra::Base
   register Sinatra::R18n
+  helpers  Sinatra::YitoJsonRequestExtractor
   set :raise_errors, true
   set :dump_errors, false
   set :show_exceptions, false

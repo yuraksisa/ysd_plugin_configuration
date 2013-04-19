@@ -40,9 +40,16 @@ module Huasi
                     {:path => '/configuration/settings',
                      :options => {:title => app.t.configuration_admin_menu.variable_management,
                                   :link_route => "/variable-management",
-                                  :description => 'Configure the modules settings',
+                                  :description => 'Configure modules settings',
                                   :module => 'configuration',
-                                  :weight => 10}}]
+                                  :weight => 10}},
+                    {:path => '/configuration/settings',
+                     :options => {:title => app.t.configuration_admin_menu.secure_variable_management,
+                                  :link_route => "/admin/svariable",
+                                  :description => 'Configure modules secure settings',
+                                  :module => 'configuration',
+                                  :weight => 12}},
+                                ]
        
    
     end
@@ -60,9 +67,16 @@ module Huasi
       routes = [{:path => '/variable-management',
                  :regular_expression => /^\/variable-management/,
                  :title => 'Settings',
-                 :description => 'Configure the modules settings',
+                 :description => 'Configure modules settings',
                  :fit => 1,
-                 :module => :configuration}]
+                 :module => :configuration},
+                {:path => '/admin/svariable',
+                 :regular_expression => /^\/admin\/svariable/,
+                 :title => 'Settings',
+                 :description => 'Configure modules secure settings',
+                 :fit => 1,
+                 :module => :configuration}
+               ]
     
     end  
   
