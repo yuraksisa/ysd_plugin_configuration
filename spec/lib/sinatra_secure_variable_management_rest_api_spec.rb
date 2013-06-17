@@ -24,7 +24,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
     
     before :each do
       SystemConfiguration::Variable.should_receive(:get_value).
-          with('configuration.secure_variable_page_size').
+          with('configuration.secure_variable_page_size', 20).
           and_return(10) 
     end
 
@@ -32,7 +32,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
 
       before :each do
         SystemConfiguration::SecureVariable.should_receive(:all_and_count).
-          with({:offset => 0, :limit => 10}).
+          with(hash_including({:offset => 0, :limit => 10})).
           and_return([[SystemConfiguration::SecureVariable.new(secure_variable)], 1])
       end
 
@@ -52,7 +52,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
 
       before :each do
         SystemConfiguration::SecureVariable.should_receive(:all_and_count).
-          with({:offset => 10, :limit => 10}).
+          with(hash_including({:offset => 10, :limit => 10})).
           and_return([[SystemConfiguration::SecureVariable.new(secure_variable)], 1])
       end
 
@@ -72,7 +72,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
 
       before :each do
         SystemConfiguration::SecureVariable.should_receive(:all_and_count).
-          with(hash_including(:conditions => {:name.like => "%text%"}, :offset => 10, :limit => 10)).
+          with(hash_including(:offset => 10, :limit => 10)).
           and_return([[SystemConfiguration::SecureVariable.new(secure_variable)], 1])
       end
 
