@@ -91,6 +91,26 @@ module Sinatra
         end
         
         #
+        # Updates multiple variables
+        #
+        app.put "/variables" do
+      
+          request.body.rewind
+          variables = JSON.parse(URI.unescape(request.body.read))      
+          
+          variables.each do |key, value|
+            if variable = SystemConfiguration::Variable.get(key)
+              variable.value = value
+              variable.save
+            end         
+          end
+          
+          content_type :json
+          true.to_json
+      
+        end
+
+        #
         # Deletes a variable
         #
         app.delete "/variable" do
