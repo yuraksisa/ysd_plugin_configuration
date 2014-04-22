@@ -12,8 +12,9 @@ module Sinatra
       # @param [String] label
       # @param [Number] maxlength
       # @param [Number] size
+      # @param [String] class name
       #
-      def render_variable_input_text(variable_name, label, maxlength, size)
+      def render_variable_input_text(variable_name, label, maxlength, size, class_name='')
 
          value = SystemConfiguration::Variable.get_value(variable_name,'')
 
@@ -21,8 +22,63 @@ module Sinatra
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
                 <input type="text" name="#{variable_name}" id="#{variable_name}" 
-                class="fieldcontrol" maxlength="#{maxlength}" size="#{size}" 
+                class="fieldcontrol variable #{class_name}" maxlength="#{maxlength}" size="#{size}" 
                 value="#{value}"/>
+              </div>
+         EDITOR
+
+      end
+
+      #
+      # Render a variable as boolean checkbox
+      #
+      # @param [String] variable name
+      # @param [String] label
+      # @param [String] class name
+      #
+      def render_variable_checkbox_boolean(variable_name, label, class_name='')
+         
+         value = SystemConfiguration::Variable.get_value(variable_name, 'false').to_bool
+
+         is_checked = value ? "checked=\"true\"" : ""
+
+         editor = <<-EDITOR
+              <div class="formrow">         
+                <input type="checkbox" name="#{variable_name}" id="#{variable_name}" 
+                class="fieldcontrol variable #{class_name}" value="true" style="display:inline; width:auto" #{is_checked}/>
+                <label for="#{variable_name}" class="fieldtitle" style="display:inline">#{label}</label>
+              </div>        
+         EDITOR
+         
+
+      end
+
+      #
+      # Render a select
+      #
+      #
+      def render_variable_select(variable_name, label, values, class_name='')
+
+         value = SystemConfiguration::Variable.get_value(variable_name,'')
+
+         options = ""
+
+         if values and values.respond_to?(:each)
+            values.each do |option_id, option_value| 
+              options << (value == option_id ?
+                 "<option value=\"#{option_id}\" selected=\"selected\">#{option_value}</option>" :
+                 "<option value=\"#{option_id}\">#{option_value}</option>" 
+                 )
+            end
+         end
+
+         editor = <<-EDITOR
+              <div class="formrow">
+                <label for="#{variable_name}" class="fieldtitle">#{label}</label>
+                <select name="#{variable_name}" id="#{variable_name}" 
+                  class="fieldcontrol variable #{class_name}">
+                  #{options}
+                </select>
               </div>
          EDITOR
 
@@ -33,8 +89,9 @@ module Sinatra
       #
       # @param [String] The configuration variable name
       # @param [String] The label
+      # @param [String] class name      
       #
-      def render_variable_textarea(variable_name, label)
+      def render_variable_textarea(variable_name, label, class_name='')
 
          value = SystemConfiguration::Variable.get_value(variable_name,'')
 
@@ -42,7 +99,7 @@ module Sinatra
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
                 <textarea name="#{variable_name}" id="#{variable_name}" 
-                class="fieldcontrol variable" rows="5" data-autosubmit="true">#{value}</textarea>
+                class="fieldcontrol variable #{class_name}" rows="5" data-autosubmit="true">#{value}</textarea>
               </div>
          EDITOR
 
@@ -55,8 +112,9 @@ module Sinatra
       # @param [String] label
       # @param [Number] maxlength
       # @param [Number] size
+      # @param [String] class name
       #
-      def render_variable_input_text_autosubmit(variable_name, label, maxlength, size)
+      def render_variable_input_text_autosubmit(variable_name, label, maxlength, size, class_name='')
 
          value = SystemConfiguration::Variable.get_value(variable_name,'')
 
@@ -66,7 +124,7 @@ module Sinatra
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
                 <input type="text" name="#{variable_name}" id="#{variable_name}" 
-                class="fieldcontrol" maxlength="#{maxlength}" size="#{size}" 
+                class="fieldcontrol variable #{class_name}" maxlength="#{maxlength}" size="#{size}" 
                 value="#{value}" data-autosubmit="true"/>
               </div>
               <input type="submit">Submit</input>
@@ -80,8 +138,9 @@ module Sinatra
       #
       # @param [String] The configuration variable name
       # @param [String] The label
+      # @param [String] class name      
       #
-      def render_variable_textarea_autosubmit(variable_name, label)
+      def render_variable_textarea_autosubmit(variable_name, label, class_name='')
 
          value = SystemConfiguration::Variable.get_value(variable_name,'')
 
@@ -91,7 +150,7 @@ module Sinatra
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
                 <textarea name="#{variable_name}" id="#{variable_name}" 
-                class="fieldcontrol variable" rows="5" data-autosubmit="true">#{value}</textarea>
+                class="fieldcontrol variable #{class_name}" rows="5" data-autosubmit="true">#{value}</textarea>
               </div>
               <input type="submit">Submit</input>
            </form>
