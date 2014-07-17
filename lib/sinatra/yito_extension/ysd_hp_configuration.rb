@@ -44,6 +44,7 @@ module Sinatra
 
          editor = <<-EDITOR
               <div class="formrow">         
+                <input type="hidden" name="#{variable_name}" id="#{variable_name}" value="false"/>
                 <input type="checkbox" name="#{variable_name}" id="#{variable_name}" 
                 class="fieldcontrol variable #{class_name}" value="true" style="display:inline; width:auto" #{is_checked}/>
                 <label for="#{variable_name}" class="fieldtitle" style="display:inline">#{label}</label>

@@ -100,6 +100,11 @@ module Sinatra
           
           variables.each do |key, value|
             if variable = SystemConfiguration::Variable.get(key)
+              if value.is_a?Array
+                if value.all? {|x| !!x == x}
+                  value = value.last
+                end
+              end
               variable.value = value
               variable.save
             end         
