@@ -100,7 +100,7 @@ module Sinatra
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
                 <textarea name="#{variable_name}" id="#{variable_name}" 
-                class="fieldcontrol variable #{class_name}" rows="5" data-autosubmit="true">#{value}</textarea>
+                class="fieldcontrol variable #{class_name}" rows="5">#{value}</textarea>
               </div>
          EDITOR
 
@@ -120,7 +120,7 @@ module Sinatra
          value = SystemConfiguration::Variable.get_value(variable_name,'')
 
          editor = <<-EDITOR 
-           <form name="#{variable_name}" action="/variables" method="POST" 
+           <form name="#{variable_name}" action="/api/variables" method="POST" 
                  data-remote="ajax" data-remote-method="PUT">
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
@@ -146,7 +146,7 @@ module Sinatra
          value = SystemConfiguration::Variable.get_value(variable_name,'')
 
          editor = <<-EDITOR 
-           <form name="#{variable_name}" action="/variables" method="PUT" 
+           <form name="#{variable_name}" action="/api/variables" method="PUT" 
                  data-remote="ajax" data-remote-method="PUT">
               <div class="formrow">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>

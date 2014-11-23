@@ -20,7 +20,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
     TestingSinatraApp
   end
 
-  describe "POST /svariables" do
+  describe "POST /api/svariables" do
     
     before :each do
       SystemConfiguration::Variable.should_receive(:get_value).
@@ -37,7 +37,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do
-        post '/svariables', {}
+        post '/api/svariables', {}
         last_response
       end
 
@@ -57,7 +57,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do
-        post '/svariables/page/2', {}
+        post '/api/svariables/page/2', {}
         last_response
       end
 
@@ -77,7 +77,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do 
-        post '/svariables/page/2', {:search => 'text'}
+        post '/api/svariables/page/2', {:search => 'text'}
         last_response
       end
       
@@ -90,7 +90,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
 
   end
 
-  describe "POST /svariable" do
+  describe "POST /api/svariable" do
     
     context "new secure variable creation ok" do
       
@@ -101,7 +101,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do 
-        post '/svariable', secure_variable.to_json
+        post '/api/svariable', secure_variable.to_json
         last_response
       end
 
@@ -114,7 +114,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
 
   end
 
-  describe "PUT /svariable" do
+  describe "PUT /api/svariable" do
   
     context "updating existing variable" do
 
@@ -128,7 +128,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do 
-        put '/svariable', secure_variable.to_json
+        put '/api/svariable', secure_variable.to_json
         last_response
       end
    
@@ -148,7 +148,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do 
-        put '/svariable', secure_variable.to_json
+        put '/api/svariable', secure_variable.to_json
         last_response
       end
    
@@ -158,7 +158,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
    
   end
 
-  describe "DELETE /svariable" do
+  describe "DELETE /api/svariable" do
   
     context "deleting existing variable" do
 
@@ -172,7 +172,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do 
-        delete '/svariable', secure_variable.to_json
+        delete '/api/svariable', secure_variable.to_json
         last_response
       end
    
@@ -192,7 +192,7 @@ describe Sinatra::YSD::SecureVariableManagementRESTApi do
       end
 
       subject do 
-        delete '/svariable', secure_variable.to_json
+        delete '/api/svariable', secure_variable.to_json
         last_response
       end
    

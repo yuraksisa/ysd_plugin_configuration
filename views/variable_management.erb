@@ -178,15 +178,15 @@
   };
   
   var urls = { 
-  	           query_url  : '/variables',
-    	       create_url : '/variable',
-  	           update_url : '/variable',
-  	           delete_url : '/variable',
-  	           get_url    : '/variable'
+  	           query_url  : '/api/variables',
+    	         create_url : '/api/variable',
+  	           update_url : '/api/variable',
+  	           delete_url : '/api/variable',
+  	           get_url    : '/api/variable'
   	         };
   
   var variableHook = new VariableHook();
-  var variablesManager = new EntityManagement(urls, 'configuration variable', <%= variable_page_size %>, variableHook);
+  var variablesManager = new EntityManagement(urls, 'configuration variable', <%= variable_page_size %>, variableHook, {prefix:'/admin/configuration'});
  
  });
   

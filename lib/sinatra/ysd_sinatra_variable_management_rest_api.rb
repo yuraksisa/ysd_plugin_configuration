@@ -9,7 +9,7 @@ module Sinatra
         #
         # Retrive all variables (GET)
         #
-        app.get "/variables" do
+        app.get "/api/variables" do
           data=SystemConfiguration::Variable.all
   
           # Prepare the result
@@ -20,7 +20,7 @@ module Sinatra
         #
         # Retrieve variables (POST)
         #
-        ["/variables","/variables/page/:page"].each do |path|
+        ["/api/variables","/api/variables/page/:page"].each do |path|
           app.post path do
             
             query_options = {}
@@ -63,7 +63,7 @@ module Sinatra
         #
         # Create a new variable
         #
-        app.post "/variable" do
+        app.post "/api/variable" do
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
           
@@ -77,7 +77,7 @@ module Sinatra
         #
         # Updates a variable
         #
-        app.put "/variable" do
+        app.put "/api/variable" do
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
           
@@ -93,7 +93,7 @@ module Sinatra
         #
         # Updates multiple variables
         #
-        app.put "/variables" do
+        app.put "/api/variables" do
       
           request.body.rewind
           variables = JSON.parse(URI.unescape(request.body.read))      
@@ -118,7 +118,7 @@ module Sinatra
         #
         # Deletes a variable
         #
-        app.delete "/variable" do
+        app.delete "/api/variable" do
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
 

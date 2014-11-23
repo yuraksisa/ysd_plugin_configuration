@@ -7,7 +7,7 @@ module Sinatra
         #
         # Variables management page
         #
-        app.get "/variable-management" do
+        app.get "/admin/configuration/variable" do
           load_page :variable_management, 
             :locals => {:variable_page_size => 20}
         end

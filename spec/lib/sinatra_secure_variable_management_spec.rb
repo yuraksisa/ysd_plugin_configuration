@@ -11,7 +11,7 @@ describe Sinatra::YSD::SecureVariableManagement do
     TestingSinatraApp
   end
 
-  describe '/admin/svariable' do
+  describe '/admin/configuration/svariable' do
    
    before :each do
      app.any_instance.should_receive(:load_page).
@@ -20,7 +20,7 @@ describe Sinatra::YSD::SecureVariableManagement do
    end
 
    subject do 
-     get '/admin/svariable'
+     get '/admin/configuration/svariable'
      last_response       
    end
 

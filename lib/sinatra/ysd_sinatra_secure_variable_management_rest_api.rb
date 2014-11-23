@@ -8,7 +8,7 @@ module Sinatra
 
       def self.registered(app)
    
-        ['/svariables','/svariables/page/:page'].each do |path|
+        ['/api/svariables','/api/svariables/page/:page'].each do |path|
           app.post path do
             
             query_options = {}
@@ -40,7 +40,7 @@ module Sinatra
         #
         # Creates a new secure variable
         #
-        app.post '/svariable' do
+        app.post '/api/svariable' do
         
           s_variable_request = body_as_json(SystemConfiguration::SecureVariable)
           secure_variable = SystemConfiguration::SecureVariable.create(s_variable_request)
@@ -54,7 +54,7 @@ module Sinatra
         #
         # Updates a secure variable
         #
-        app.put '/svariable' do
+        app.put '/api/svariable' do
 
           s_variable_request = body_as_json(SystemConfiguration::SecureVariable)
           
@@ -75,7 +75,7 @@ module Sinatra
         #
         # Delete a secure variable
         #
-        app.delete '/svariable' do
+        app.delete '/api/svariable' do
 
           s_variable_request = body_as_json(SystemConfiguration::SecureVariable)
           

@@ -153,15 +153,15 @@
   };
   
   var urls = { 
-  	           query_url  : '/svariables',
-    	         create_url : '/svariable',
-  	           update_url : '/svariable',
-  	           delete_url : '/svariable',
-  	           get_url    : '/svariable'
+  	           query_url  : '/api/svariables',
+    	         create_url : '/api/svariable',
+  	           update_url : '/api/svariable',
+  	           delete_url : '/api/svariable',
+  	           get_url    : '/api/svariable'
   	         };
   
   var variableHook = new VariableHook();
-  var variablesManager = new EntityManagement(urls, 'configuration variable', <%=secure_variable_page_size%>, variableHook, {prefix: '/admin'});
+  var variablesManager = new EntityManagement(urls, 'configuration variable', <%=secure_variable_page_size%>, variableHook, {prefix: '/admin/configuration'});
  
  });
   
