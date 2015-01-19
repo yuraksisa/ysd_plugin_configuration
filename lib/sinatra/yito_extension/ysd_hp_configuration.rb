@@ -74,7 +74,7 @@ module Sinatra
          end
 
          editor = <<-EDITOR
-              <div class="formrow">
+              <div class="formrow bottom-space">
                 <label for="#{variable_name}" class="fieldtitle">#{label}</label>
                 <select name="#{variable_name}" id="#{variable_name}" 
                   class="fieldcontrol variable #{class_name}">
