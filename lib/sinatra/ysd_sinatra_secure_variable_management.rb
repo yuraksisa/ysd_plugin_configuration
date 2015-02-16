@@ -9,7 +9,7 @@ module Sinatra
         app.get '/admin/configuration/svariable' do
 
           load_page :secure_variable_management, 
-            :locals => {:secure_variable_page_size => 20}
+            :locals => {:secure_variable_page_size => 10}
 
         end
 

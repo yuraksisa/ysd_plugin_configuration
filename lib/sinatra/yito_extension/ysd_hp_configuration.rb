@@ -66,7 +66,7 @@ module Sinatra
 
          if values and values.respond_to?(:each)
             values.each do |option_id, option_value| 
-              options << (value == option_id ?
+              options << (value.to_sym == option_id.to_sym ?
                  "<option value=\"#{option_id}\" selected=\"selected\">#{option_value}</option>" :
                  "<option value=\"#{option_id}\">#{option_value}</option>" 
                  )

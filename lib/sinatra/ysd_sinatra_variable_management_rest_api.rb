@@ -33,7 +33,7 @@ module Sinatra
               query_options.store(:conditions, conditions)
             end
           
-            page_size = SystemConfiguration::Variable.get_value('configuration.variables_page_size', 20).to_i
+            page_size = 12
             
             page = params[:page].to_i || 1
             limit = page_size
