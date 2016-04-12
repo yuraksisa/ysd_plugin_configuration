@@ -42,8 +42,6 @@ module Sinatra
             query_options.store(:limit, limit)
             query_options.store(:offset, offset)
             
-            puts "query options : #{query_options.inspect}"
-            
             # Do the search
             data=SystemConfiguration::Variable.all(query_options)
             

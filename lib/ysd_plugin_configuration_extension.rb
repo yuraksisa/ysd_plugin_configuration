@@ -65,14 +65,16 @@ module Huasi
     def routes(context={})
     
       routes = [{:path => '/admin/configuration/variable',
+                 :parent_path => '/admin/site/configuration',
                  :regular_expression => /^\/admin\/configuration\/variable/,
-                 :title => 'Settings',
+                 :title => 'Variables',
                  :description => 'Configure modules settings',
                  :fit => 1,
                  :module => :configuration},
                 {:path => '/admin/configuration/svariable',
+                 :parent_path => '/admin/site/configuration',
                  :regular_expression => /^\/admin\/configuration\/svariable/,
-                 :title => 'Settings',
+                 :title => 'Variables seguras',
                  :description => 'Configure modules secure settings',
                  :fit => 1,
                  :module => :configuration}
