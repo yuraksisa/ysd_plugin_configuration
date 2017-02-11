@@ -26,11 +26,12 @@ module Sinatra
             query_options = {}
             conditions = {}
             
-            if request.media_type == "application/x-www-form-urlencoded" # Just the text
+            if request.media_type == "application/json" # Just the text
               request.body.rewind
-              search_text=request.body.read
-              conditions = {:name.like => "%#{search_text}%"}
-              query_options.store(:conditions, conditions)
+              search_request = JSON.parse(URI.unescape(request.body.read))
+              if search_request.has_key?('search')
+                query_options[:conditions] = {:name.like => "%#{search_request['search']}%"}
+              end
             end
           
             page_size = 12
