@@ -9,7 +9,7 @@ module Sinatra
         #
         # Retrive all variables (GET)
         #
-        app.get "/api/variables" do
+        app.get "/api/variables", :allowed_usergroups => ['staff','webmaster'] do
           data=SystemConfiguration::Variable.all
   
           # Prepare the result
@@ -21,7 +21,7 @@ module Sinatra
         # Retrieve variables (POST)
         #
         ["/api/variables","/api/variables/page/:page"].each do |path|
-          app.post path do
+          app.post path, :allowed_usergroups => ['staff','webmaster'] do
             
             query_options = {}
             conditions = {}
@@ -62,7 +62,7 @@ module Sinatra
         #
         # Create a new variable
         #
-        app.post "/api/variable" do
+        app.post "/api/variable", :allowed_usergroups => ['staff','webmaster'] do
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
           
@@ -76,13 +76,16 @@ module Sinatra
         #
         # Updates a variable
         #
-        app.put "/api/variable" do
+        app.put "/api/variable", :allowed_usergroups => ['staff','webmaster'] do
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
           
-          the_variable = SystemConfiguration::Variable.get(variable_request['name'])
-          the_variable.attributes=(variable_request)
-          the_variable.save
+          if the_variable = SystemConfiguration::Variable.get(variable_request['name'])
+            the_variable.attributes=(variable_request)
+            the_variable.save
+          else
+            the_variable = SystemConfiguration::Variable.create(variable_request)
+          end    
 
           status 200
           content_type :json
@@ -92,21 +95,21 @@ module Sinatra
         #
         # Updates multiple variables
         #
-        app.put "/api/variables" do
+        app.put "/api/variables", :allowed_usergroups => ['staff','webmaster'] do
       
           request.body.rewind
           variables = JSON.parse(URI.unescape(request.body.read))      
           
           variables.each do |key, value|
-            if variable = SystemConfiguration::Variable.get(key)
-              if value.is_a?Array
-                if value.all? {|x| !!x == x}
-                  value = value.last
-                end
+            variable = SystemConfiguration::Variable.get(key)
+            variable ||= SystemConfiguration::Variable.new()
+            if value.is_a?Array
+              if value.all? {|x| !!x == x}
+                value = value.last
               end
-              variable.value = value
-              variable.save
-            end         
+            end
+            variable.value = value
+            variable.save                     
           end
           
           content_type :json
@@ -117,7 +120,7 @@ module Sinatra
         #
         # Deletes a variable
         #
-        app.delete "/api/variable" do
+        app.delete "/api/variable", :allowed_usergroups => ['staff','webmaster'] do
           request.body.rewind
           variable_request = JSON.parse(URI.unescape(request.body.read))
 
