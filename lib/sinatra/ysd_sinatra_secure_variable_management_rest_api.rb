@@ -71,6 +71,31 @@ module Sinatra
         end
 
         #
+        # Updates multiple variables
+        #
+        app.put "/api/svariables", :allowed_usergroups => ['staff'] do
+      
+          request.body.rewind
+          secure_variables = JSON.parse(URI.unescape(request.body.read))      
+          
+          secure_variables.each do |key, value|
+            secure_variable = SystemConfiguration::SecureVariable.get(key)
+            secure_variable ||= SystemConfiguration::SecureVariable.new()
+            if value.is_a?Array
+              if value.all? {|x| !!x == x}
+                value = value.last
+              end
+            end
+            secure_variable.value = value
+            secure_variable.save                     
+          end
+          
+          content_type :json
+          true.to_json
+      
+        end
+
+        #
         # Delete a secure variable
         #
         app.delete '/api/svariable', :allowed_usergroups => ['staff'] do
