@@ -34,24 +34,12 @@ module Sinatra
               end
             end
           
-            page_size = 12
-            
-            page = params[:page].to_i || 1
-            limit = page_size
-            offset = (page-1) * page_size        
-            
-            query_options.store(:limit, limit)
-            query_options.store(:offset, offset)
-            
-            # Do the search
-            data=SystemConfiguration::Variable.all(query_options)
-            
-            begin # Count does not work for all adapters
-              total=SystemConfiguration::Variable.count(conditions)
-            rescue
-              total=SystemConfiguration::Variable.all.length
-            end
-            
+            page_size = 20
+            page = [params[:page].to_i, 1].max
+
+            data, total = SystemConfiguration::Variable.all_and_count(
+                query_options.merge({:offset => (page - 1)  * page_size, :limit => page_size}) )
+
             content_type :json
             {:data => data, :summary => {:total => total}}.to_json
           

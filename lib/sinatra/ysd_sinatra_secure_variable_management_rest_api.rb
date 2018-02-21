@@ -21,8 +21,7 @@ module Sinatra
               end
             end
 
-            page_size = SystemConfiguration::Variable.
-              get_value('configuration.secure_variable_page_size', 20).to_i 
+            page_size = 20
   
             page = [params[:page].to_i, 1].max  
 
