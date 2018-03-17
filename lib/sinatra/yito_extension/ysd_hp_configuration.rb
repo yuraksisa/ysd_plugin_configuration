@@ -58,30 +58,44 @@ module Sinatra
       # Render a select
       #
       #
-      def render_variable_select(variable_name, label, values, class_name='')
+      def render_variable_select(variable_name, label, values, class_name='', inline=false)
 
-         value = SystemConfiguration::Variable.get_value(variable_name,'')
+        value = SystemConfiguration::Variable.get_value(variable_name,'')
 
-         options = ""
+        options = ""
 
-         if values and values.respond_to?(:each)
-            values.each do |option_id, option_value| 
-              options << (value.to_sym == option_id.to_sym ?
-                 "<option value=\"#{option_id}\" selected=\"selected\">#{option_value}</option>" :
-                 "<option value=\"#{option_id}\">#{option_value}</option>" 
-                 )
+        if values.is_a?(Hash)
+          values.each do |option_id, option_value|
+            if value.to_sym == option_id.to_sym
+              options << "<option value=\"#{option_id}\" selected=\"selected\">#{option_value}</option>"
+            else
+              options << "<option value=\"#{option_id}\">#{option_value}</option>"
             end
-         end
+          end
+        elsif values.is_a?(Array)
+          values.each do |option_value|
+            if value.to_s == option_value.to_s
+              options << "<option value=\"#{option_value}\" selected=\"selected\">#{option_value}</option>"
+            else
+              options << "<option value=\"#{option_value}\">#{option_value}</option>"
+            end
+          end
+        end
 
-         editor = <<-EDITOR
-              <div class="formrow bottom-space">
-                <label for="#{variable_name}" class="fieldtitle">#{label}</label>
+        editor = ''
+        editor << '<div class="formrow bottom-space">' unless inline
+        editor << "<label for=\"#{variable_name}\" class=\"fieldtitle\">#{label}</label>" if !label.nil? and !label.empty?
+
+        editor << <<-EDITOR
                 <select name="#{variable_name}" id="#{variable_name}" 
-                  class="fieldcontrol variable #{class_name}">
+                  class="#{inline ? '' : 'fieldcontrol'} variable #{class_name}">
                   #{options}
                 </select>
-              </div>
-         EDITOR
+        EDITOR
+
+        editor << '</div>' unless inline
+
+        return editor
 
       end
 
