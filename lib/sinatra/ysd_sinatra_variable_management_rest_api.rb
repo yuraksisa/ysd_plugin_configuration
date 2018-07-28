@@ -89,15 +89,20 @@ module Sinatra
           variables = JSON.parse(URI.unescape(request.body.read))      
           
           variables.each do |key, value|
-            variable = SystemConfiguration::Variable.get(key)
-            variable ||= SystemConfiguration::Variable.new()
-            if value.is_a?Array
-              if value.all? {|x| !!x == x}
-                value = value.last
+            begin
+              variable = SystemConfiguration::Variable.get(key)
+              variable ||= SystemConfiguration::Variable.new()
+              if value.is_a?Array
+                if value.all? {|x| !!x == x}
+                  value = value.last
+                end
               end
+              variable.value = value
+              variable.save
+            rescue DataMapper::SaveFailureError => error
+              logger.error "Error updating variable #{error.inspect} #{error.resource.errors.full_messages.inspect}"
+              raise error
             end
-            variable.value = value
-            variable.save                     
           end
           
           content_type :json
