@@ -15,9 +15,17 @@ module Huasi
     def install(context={})
 
        SystemConfiguration::Variable.first_or_create({:name => 'configuration.variables_page_size'}, 
-                                                     {:value => '20', :description => 'configuration page size', :module => :configuration}) 
+                                                     {:value => '20', :description => 'configuration page size', :module => :configuration})
 
-    
+       SystemConfiguration::Variable.first_or_create({:name => 'configuration.company.timezone'},
+                                                     {:value => 'Europe/Madrid', :description => 'Business timezone', :module => :configuration})
+
+       SystemConfiguration::Variable.first_or_create({:name => 'configuration.company.currency'},
+                                                     {:value => 'EUR', :description => 'Default currency', :module => :configuration})
+
+       SystemConfiguration::Variable.first_or_create({:name => 'configuration.company.currency_format'},
+                                                     {:value => '000.000.000,00', :description => 'Currency format', :module => :configuration})
+      
     end 
                 
     # ========= Menu =====================
