@@ -366,7 +366,70 @@ module Sinatra
            </form>
          EDITOR
 
-      end         
+      end
+
+      # --------------------------------- Counter -----------------------------------------------------         
+
+      #
+      # Render an input text for editing a counter with autosubmit
+      #
+      # @param [String] counter name
+      # @param [String] serie
+      # @param [String] label
+      # @param [Number] size
+      # @param [String] class name
+      #
+      def render_counter_autosubmit(counter_name, serie, label, class_name='')
+
+         if counter = SystemConfiguration::Counter.get_counter(counter_name, serie)
+           editor = counter_form_render(counter, label, class_name)
+         end
+
+      end
+
+      #
+      # Render all the series of a counter with autosubmit
+      #
+      # @param [String] counter name
+      # @param [String] serie
+      # @param [String] label
+      # @param [Number] size
+      # @param [String] class name
+      #
+      def render_counters_autosubmit(counter_name, label, class_name='')
+
+        counters = SystemConfiguration::Counter.all(conditions: {name: counter_name}, order: [:serie.asc])
+        result = ''
+        counters.each do |counter|
+           result << counter_form_render(counter, label, class_name)
+        end 
+        return result
+ 
+      end  
+
+      private
+
+      def counter_form_render(counter, label, class_name)
+
+           editor = <<-EDITOR 
+             <form name="counter_#{counter.id}" action="/api/counter" method="PUT" 
+                   data-remote="ajax" data-remote-method="PUT" class="form-inline">
+                <div class="formrow">
+                  <input type="hidden" name="id" value="#{counter.id}"%>
+                  <label for="#{counter.id}" class="col-md-2" 
+                   style="position: relative; top: 7px">#{label}</label>
+                  <input type="text" id="serie" name="serie" size="10"
+                   value="#{counter.serie}" placeholder="serie" class="col-md-2" />
+                  <input type="text" name="value" 
+                   class="col-md-3 variable #{class_name} text-right" maxlength="10" size="10" 
+                   value="#{counter.value}"/>
+                  <button type="submit"
+                   class="btn btn-sm btn-primary col-md-1" 
+                   style="margin-left: 5px; width: 34px; height: 34px; display: inline-block"><i class="fa fa-save push-5-r"></i></button> 
+                </div>
+             </form>
+           EDITOR
+      end
 
   	end
   end

@@ -12,6 +12,7 @@ Plugins::SinatraAppPlugin.register :configuration do
    sinatra_extension Sinatra::YSD::VariableManagementRESTApi
    sinatra_extension Sinatra::YSD::SecureVariableManagement
    sinatra_extension Sinatra::YSD::SecureVariableManagementRESTApi
+   sinatra_extension Sinatra::YSD::CountersManagementRESTApi   
    sinatra_helper Sinatra::YitoExtension::ConfigurationHelper   
    hooker            Huasi::ConfigurationExtension
   
